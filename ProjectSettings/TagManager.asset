@@ -49,6 +49,9 @@ TagManager:
   - name: obstacle
     uniqueID: 3603139475
     locked: 0
+  - name: weapon
+    uniqueID: 1862752487
+    locked: 0
   - name: players
     uniqueID: 2512259921
     locked: 0
