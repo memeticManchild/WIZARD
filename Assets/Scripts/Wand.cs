@@ -24,6 +24,7 @@ public class Wand : MonoBehaviour
             Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - owner.transform.position;
             GameObject p = Instantiate(projectile, transform.position, Quaternion.identity);
             p.GetComponent<Projectile>().SetDirection(direction);
+            Destroy(p, 3f);
             timeSincePrevUse = 0;
             owner.GetComponent<Animator>().SetBool("DidSingleShot", true);
         }
