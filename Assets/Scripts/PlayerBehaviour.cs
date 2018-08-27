@@ -10,12 +10,14 @@ public class PlayerBehaviour : MonoBehaviour {
     private Rigidbody2D rigid2d;
     private Transform legs;
     private float maxSpeed;
+    private bool IsShooting;
 
     private void Awake()
     {
         legs = transform.Find("Legs");
         rigid2d = (Rigidbody2D)transform.GetComponent("Rigidbody2D");
         maxSpeed = speed / rigid2d.drag; //The maximum speed of walking without any modifiers
+        IsShooting = false;
     }
 
     private void FixedUpdate()
@@ -26,6 +28,8 @@ public class PlayerBehaviour : MonoBehaviour {
         float speedRatio = rigid2d.velocity.magnitude / maxSpeed; //The ratio between the current speed and maximum speed
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
+        if (Input.GetKeyDown("q"))
+            IsShooting = !IsShooting;
         bool isClick = Input.GetMouseButtonDown(0);
 
         //The more you look away from where you are headed to, the slower you move
@@ -45,11 +49,12 @@ public class PlayerBehaviour : MonoBehaviour {
 
         rigid2d.AddForce(movementForce);
 
-        //Wand manipulation
-        if (isClick)
+        //Wand manipulation and animation
+        transform.GetComponent<Animator>().SetBool("IsShooting", IsShooting);
+        transform.GetComponent<Animator>().SetBool("DidSingleShot", false);
+        if (isClick && IsShooting)
             wand.cast();
 
-        //Animation
         transform.GetComponent<Animator>().SetFloat("Speed", speedRatio);
         transform.GetComponent<Animator>().SetFloat("ArmSpeed", sightVsWalkingDirectionWeight);
     }

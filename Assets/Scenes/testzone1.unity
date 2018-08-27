@@ -3014,7 +3014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1066497135439076, guid: 0d2384c2c15018643a74820de10664d7, type: 2}
   damage: 5
-  castRate: 0.5
+  castCooldown: 1
   owner: {fileID: 428278188}
 --- !u!212 &1254898764
 SpriteRenderer:
