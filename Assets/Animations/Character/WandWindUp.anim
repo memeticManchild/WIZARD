@@ -158,7 +158,7 @@ AnimationClip:
     - time: 0
       value: {fileID: 21300000, guid: ea5c1e28bcb2a15439aca9160fdc3599, type: 3}
     - time: 0.2
-      value: {fileID: 21300000, guid: 6c09a0b38e0701e4fb83ab2fe6806e63, type: 3}
+      value: {fileID: 21300000, guid: 3f4214e705a708147b8ef3925956236c, type: 3}
     attribute: m_Sprite
     path: Arms/Left Arm
     classID: 212
@@ -214,7 +214,7 @@ AnimationClip:
       isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 21300000, guid: ea5c1e28bcb2a15439aca9160fdc3599, type: 3}
-    - {fileID: 21300000, guid: 6c09a0b38e0701e4fb83ab2fe6806e63, type: 3}
+    - {fileID: 21300000, guid: 3f4214e705a708147b8ef3925956236c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
