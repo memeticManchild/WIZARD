@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour {
 
     public void SetDirection(Vector2 direction)
     {
-        this.direction = direction;
+        this.direction = direction.normalized;
     }
 
     private void FixedUpdate()
