@@ -6,18 +6,19 @@ public class PlayerBehaviour : MonoBehaviour {
 
     public float speed;
     public Wand wand;
+    public Transform legs;
+    public Rigidbody2D rigid2d;
+    public Animator animator;
 
-    private Rigidbody2D rigid2d;
-    private Transform legs;
     private float maxSpeed;
-    private bool IsShooting;
+    private bool isShooting;
+    private bool isReadyToShoot;
 
     private void Awake()
     {
-        legs = transform.Find("Legs");
-        rigid2d = (Rigidbody2D)transform.GetComponent("Rigidbody2D");
         maxSpeed = speed / rigid2d.drag; //The maximum speed of walking without any modifiers
-        IsShooting = false;
+        isShooting = false;
+        isReadyToShoot = false;
     }
 
     private void FixedUpdate()
@@ -29,7 +30,9 @@ public class PlayerBehaviour : MonoBehaviour {
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
         if (Input.GetKeyDown("q"))
-            IsShooting = !IsShooting;
+            isShooting = !isShooting;
+        if (!isShooting)
+            isReadyToShoot = false;
         bool isClick = Input.GetMouseButtonDown(0);
 
         //The more you look away from where you are headed to, the slower you move
@@ -47,16 +50,19 @@ public class PlayerBehaviour : MonoBehaviour {
 
         movementForce *= speed * (sightVsWalkingDirectionWeight / 4f + 0.75f);
 
+        if (isShooting)
+            movementForce *= 0.75f;
+
         rigid2d.AddForce(movementForce);
 
         //Wand manipulation and animation
-        transform.GetComponent<Animator>().SetBool("IsShooting", IsShooting);
-        transform.GetComponent<Animator>().SetBool("DidSingleShot", false);
-        if (isClick && IsShooting)
+        animator.SetBool("IsShooting", isShooting);
+        animator.SetBool("DidSingleShot", false);
+        if (isClick && isShooting && isReadyToShoot)
             wand.cast();
 
-        transform.GetComponent<Animator>().SetFloat("Speed", speedRatio);
-        transform.GetComponent<Animator>().SetFloat("ArmSpeed", sightVsWalkingDirectionWeight);
+        animator.SetFloat("Speed", speedRatio);
+        animator.SetFloat("ArmSpeed", sightVsWalkingDirectionWeight);
     }
 
     private void rotate_body()
@@ -84,5 +90,8 @@ public class PlayerBehaviour : MonoBehaviour {
         legs.eulerAngles = new Vector3(0, 0, legs.eulerAngles.z);
     }
 
-
+    public void readyToShoot() // used in animation event
+    {
+        isReadyToShoot = true;
+    }
 }

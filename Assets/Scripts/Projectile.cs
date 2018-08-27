@@ -10,9 +10,11 @@ public class Projectile : MonoBehaviour {
     public int damage;
     private Vector2 direction;
 
-    public void SetDirection(Vector2 direction)
+    public void getShot(Vector2 direction, int wandDamage, float wandTravelSpeed)
     {
         this.direction = direction.normalized;
+        damage += wandDamage;
+        travelSpeed += wandTravelSpeed;
     }
 
     private void FixedUpdate()

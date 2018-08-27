@@ -262,6 +262,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1500
   wand: {fileID: 1254898763}
+  legs: {fileID: 2050241481}
+  rigid2d: {fileID: 428278189}
+  animator: {fileID: 428278192}
 --- !u!50 &428278189
 Rigidbody2D:
   serializedVersion: 4
@@ -3014,7 +3017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1066497135439076, guid: 0d2384c2c15018643a74820de10664d7, type: 2}
   damage: 5
-  castCooldown: 1
+  castCooldown: 0.3
   owner: {fileID: 428278188}
 --- !u!212 &1254898764
 SpriteRenderer:
@@ -3505,6 +3508,21 @@ Prefab:
       propertyPath: wand
       value: 
       objectReference: {fileID: 1254898763}
+    - target: {fileID: 114018055140478516, guid: 7a2ed1fcf7307b64084f7a375e49713b,
+        type: 2}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 428278192}
+    - target: {fileID: 114018055140478516, guid: 7a2ed1fcf7307b64084f7a375e49713b,
+        type: 2}
+      propertyPath: rigid2d
+      value: 
+      objectReference: {fileID: 428278189}
+    - target: {fileID: 114018055140478516, guid: 7a2ed1fcf7307b64084f7a375e49713b,
+        type: 2}
+      propertyPath: legs
+      value: 
+      objectReference: {fileID: 2050241481}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 7a2ed1fcf7307b64084f7a375e49713b, type: 2}
