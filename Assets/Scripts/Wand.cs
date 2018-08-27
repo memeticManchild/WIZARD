@@ -5,54 +5,15 @@ using UnityEngine;
 
 public class Wand : MonoBehaviour
 {
+    public GameObject projectile; // what projectile will be generated
+    public int damage; // the base damage the wand will add to the projectile it shoots
+    public float castRate; // interval between each shot in seconds
+    public PlayerBehaviour owner; // the player who is using it
 
-    public bool autoCast; // if holding automaticly casts
-    public float damage; //how much damage it deals
-    public LayerMask dontHit; // what it doesnt hit
-    public float castRate; // how fast is the gun shooting
-    public float range; //how far the projectile goes
-    public float speed; //how fast is the bullet
-    private Rigidbody2D proj1;
-
-    Transform castPoint;
-
-    void Awake()
+    public void cast()
     {
-        castPoint = transform.Find("castPoint");
-        proj1 = (Rigidbody2D)transform.GetComponent("proj1");
+        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - owner.transform.position;
+        GameObject p = Instantiate(projectile, transform.position, Quaternion.identity);
+        p.GetComponent<Projectile>().SetDirection(direction);
     }
-
-
-    void cast()
-    {
-        Rigidbody2D projectile;
-        projectile = Instantiate(proj1, castPoint.position, castPoint.rotation);
-        projectile = (Rigidbody2D)transform.GetComponent("Rigidbody2D");
-        projectile.AddForce(projectile.transform.forward * speed * Time.deltaTime);
-    }
-
-    // Update is called once per frame
-    void Update ()
-    {
-
-
-        if (autoCast == false)
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                cast();
-            }
-        }
-        else
-        {
-            if (Input.GetButton("Fire1") && Time.time > castRate)
-            {
-                castRate = Time.time + 1 / castRate;
-                cast();
-            }
-        }
-        
-    }
-
-
 }

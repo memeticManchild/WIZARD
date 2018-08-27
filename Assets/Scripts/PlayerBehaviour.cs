@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour {
 
     public float speed;
+    public Wand wand;
 
     private Rigidbody2D rigid2d;
     private Transform legs;
@@ -25,6 +26,7 @@ public class PlayerBehaviour : MonoBehaviour {
         float speedRatio = rigid2d.velocity.magnitude / maxSpeed; //The ratio between the current speed and maximum speed
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
+        bool isClick = Input.GetMouseButtonDown(0);
 
         //The more you look away from where you are headed to, the slower you move
         //The speed ratio with the angle of looking relative to leg movement considered
@@ -41,8 +43,11 @@ public class PlayerBehaviour : MonoBehaviour {
 
         movementForce *= speed * (sightVsWalkingDirectionWeight / 4f + 0.75f);
 
-        rigid2d.AddForce(movementForce); 
+        rigid2d.AddForce(movementForce);
 
+        //Wand manipulation
+        if (isClick)
+            wand.cast();
 
         //Animation
         transform.GetComponent<Animator>().SetFloat("Speed", speedRatio);
