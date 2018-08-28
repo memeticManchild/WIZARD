@@ -27,17 +27,19 @@ public class PlayerBehaviour : MonoBehaviour {
         float speedRatio = rigid2d.velocity.magnitude / maxSpeed; //The ratio between the current speed and maximum speed
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
-        bool isClick = Input.GetMouseButtonDown(0);
+        bool isMouse1Down = Input.GetMouseButtonDown(0);
+        bool isMouse1Held = Input.GetMouseButton(0);
+        bool isMouse1Up = Input.GetMouseButtonUp(0);
 
-        rotate_body();
+        RotateBody();
 
-        move_body(speedRatio, vertical, horizontal);
+        MoveBody(speedRatio, vertical, horizontal);
 
         if (wand != null)
-            handle_wand(isClick);
+            HandleWand(isMouse1Down, isMouse1Held, isMouse1Up);
     }
 
-    private void rotate_body()
+    private void RotateBody()
     {
         //Makes the player face the mouse
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -62,25 +64,7 @@ public class PlayerBehaviour : MonoBehaviour {
         legs.eulerAngles = new Vector3(0, 0, legs.eulerAngles.z);
     }
 
-    private void handle_wand(bool isClick)
-    {
-        // Wand inputs
-        if (Input.GetKeyDown("q"))
-            isShooting = !isShooting;
-        if (!isShooting)
-            isReadyToShoot = false;
-
-        bool didCast = false;
-
-        if (isClick && isShooting && isReadyToShoot)
-            didCast = wand.cast();
-
-        // Wand animations
-        animator.SetBool("IsShooting", isShooting);
-        animator.SetBool("DidSingleShot", didCast);
-    }
-
-    private void move_body(float speedRatio, float verticalInput, float horizontalInput)
+    private void MoveBody(float speedRatio, float verticalInput, float horizontalInput)
     {
         //The more you look away from where you are headed to, the slower you move
         //The speed ratio with the angle of looking relative to leg movement considered
@@ -107,7 +91,25 @@ public class PlayerBehaviour : MonoBehaviour {
         animator.SetFloat("Speed", speedRatio);
     }
 
-    public void ready_to_shoot() // used in animation event
+    private void HandleWand(bool isMouseDown, bool isMouseHeld, bool isMouseUp)
+    {
+        // Wand inputs
+        if (Input.GetKeyDown("q"))
+            isShooting = !isShooting;
+        if (!isShooting)
+            isReadyToShoot = false;
+
+        bool didCast = false;
+
+        if (isShooting && isReadyToShoot)
+            didCast = wand.Cast(isMouseDown, isMouseHeld, isMouseUp);
+
+        // Wand animations
+        animator.SetBool("IsShooting", isShooting);
+        animator.SetBool("DidSingleShot", didCast);
+    }
+
+    public void ReadyToShoot() // used in animation event
     {
         isReadyToShoot = true;
     }

@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour {
+public abstract class Projectile : MonoBehaviour {
 
     public new Rigidbody2D rigidbody;
     public new CircleCollider2D collider;
     public float travelSpeed;
     public int damage;
-    private Vector2 direction;
+    protected Vector2 direction;
 
-    public void get_shot(Vector2 direction, int wandDamage, float wandTravelSpeed)
+    public virtual void GetShot(Vector2 direction, int wandDamage, float wandTravelSpeed)
     {
         this.direction = direction.normalized;
         damage += wandDamage;
         travelSpeed += wandTravelSpeed;
     }
 
-    private void FixedUpdate()
-    {
-        rigidbody.velocity = direction * travelSpeed * Time.deltaTime;
-    }
+    protected abstract void UpdateMovement();
+
 }
