@@ -23,46 +23,18 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        rotate_body();
-
-        //Movement
+        // Basic Inputs 
         float speedRatio = rigid2d.velocity.magnitude / maxSpeed; //The ratio between the current speed and maximum speed
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown("q"))
-            isShooting = !isShooting;
-        if (!isShooting)
-            isReadyToShoot = false;
         bool isClick = Input.GetMouseButtonDown(0);
 
-        //The more you look away from where you are headed to, the slower you move
-        //The speed ratio with the angle of looking relative to leg movement considered
-        float legsAndSightAngle = Mathf.Abs((legs.eulerAngles - transform.eulerAngles).z);
-        if (legsAndSightAngle > 180) legsAndSightAngle = 360 - legsAndSightAngle; //Correct the axis to consider the smaller angle
-        legsAndSightAngle = Mathf.Clamp(legsAndSightAngle, 0, 90);
+        rotate_body();
 
-        float sightVsWalkingDirectionWeight = (90 - legsAndSightAngle) / 90 * speedRatio; 
+        move_body(speedRatio, vertical, horizontal);
 
-        Vector2 movementForce = new Vector2(horizontal, vertical);
-
-        if (movementForce.magnitude > 1) //Correct it so running diagonally doesn't yield more speed
-            movementForce *= 1 / movementForce.magnitude;
-
-        movementForce *= speed * (sightVsWalkingDirectionWeight / 4f + 0.75f);
-
-        if (isShooting)
-            movementForce *= 0.75f;
-
-        rigid2d.AddForce(movementForce);
-
-        //Wand manipulation and animation
-        animator.SetBool("IsShooting", isShooting);
-        animator.SetBool("DidSingleShot", false);
-        if (isClick && isShooting && isReadyToShoot)
-            wand.cast();
-
-        animator.SetFloat("Speed", speedRatio);
-        animator.SetFloat("ArmSpeed", sightVsWalkingDirectionWeight);
+        if (wand != null)
+            handle_wand(isClick);
     }
 
     private void rotate_body()
@@ -90,7 +62,52 @@ public class PlayerBehaviour : MonoBehaviour {
         legs.eulerAngles = new Vector3(0, 0, legs.eulerAngles.z);
     }
 
-    public void readyToShoot() // used in animation event
+    private void handle_wand(bool isClick)
+    {
+        // Wand inputs
+        if (Input.GetKeyDown("q"))
+            isShooting = !isShooting;
+        if (!isShooting)
+            isReadyToShoot = false;
+
+        bool didCast = false;
+
+        if (isClick && isShooting && isReadyToShoot)
+            didCast = wand.cast();
+
+        // Wand animations
+        animator.SetBool("IsShooting", isShooting);
+        animator.SetBool("DidSingleShot", didCast);
+    }
+
+    private void move_body(float speedRatio, float verticalInput, float horizontalInput)
+    {
+        //The more you look away from where you are headed to, the slower you move
+        //The speed ratio with the angle of looking relative to leg movement considered
+        float legsAndSightAngle = Mathf.Abs((legs.eulerAngles - transform.eulerAngles).z);
+        if (legsAndSightAngle > 180) legsAndSightAngle = 360 - legsAndSightAngle; //Correct the axis to consider the smaller angle
+        legsAndSightAngle = Mathf.Clamp(legsAndSightAngle, 0, 90);
+
+        float sightVsWalkingDirectionWeight = (90 - legsAndSightAngle) / 90 * speedRatio;
+
+        Vector2 movementForce = new Vector2(horizontalInput, verticalInput);
+
+        if (movementForce.magnitude > 1) //Correct it so running diagonally doesn't yield more speed
+            movementForce *= 1 / movementForce.magnitude;
+
+        movementForce *= speed * (sightVsWalkingDirectionWeight / 4f + 0.75f);
+
+        if (isShooting)
+            movementForce *= 0.75f;
+
+        rigid2d.AddForce(movementForce);
+
+        //Update movement animation parameters
+        animator.SetFloat("ArmSpeed", sightVsWalkingDirectionWeight);
+        animator.SetFloat("Speed", speedRatio);
+    }
+
+    public void ready_to_shoot() // used in animation event
     {
         isReadyToShoot = true;
     }

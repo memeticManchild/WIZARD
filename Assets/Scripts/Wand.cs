@@ -17,16 +17,17 @@ public class Wand : MonoBehaviour
         timeSincePrevUse += Time.deltaTime;
     }
 
-    public void cast()
+    public bool cast()
     {
         if (timeSincePrevUse > castCooldown)
         {
             Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - owner.transform.position;
             GameObject p = Instantiate(projectile, transform.position, Quaternion.identity);
-            p.GetComponent<Projectile>().getShot(direction, damage, 0);
+            p.GetComponent<Projectile>().get_shot(direction, damage, 0);
             Destroy(p, 3f);
             timeSincePrevUse = 0;
-            owner.GetComponent<Animator>().SetBool("DidSingleShot", true);
+            return true;
         }
+        return false;
     }
 }
