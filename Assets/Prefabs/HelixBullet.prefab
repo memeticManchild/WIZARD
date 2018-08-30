@@ -72,7 +72,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 50067291408187968}
   collider: {fileID: 70678536689806822}
-  travelSpeed: 40
+  travelSpeed: 50
   damage: 15
 --- !u!212 &212576616716997782
 SpriteRenderer:
