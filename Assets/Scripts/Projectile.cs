@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour {
 
     public new Rigidbody2D rigidbody;
-    public new CircleCollider2D collider;
+    public new Collider2D collider;
     public float travelSpeed;
     public int damage;
     protected Vector2 direction;

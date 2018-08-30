@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour {
 
     public float speed;
-    public Wand wand;
+    public WandHandler wandHandler;
     public Transform legs;
     public Rigidbody2D rigid2d;
     public Animator animator;
@@ -35,7 +35,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
         MoveBody(speedRatio, vertical, horizontal);
 
-        if (wand != null)
+        if (wandHandler.wand != null)
             HandleWand(isMouse1Down, isMouse1Held, isMouse1Up);
     }
 
@@ -102,7 +102,7 @@ public class PlayerBehaviour : MonoBehaviour {
         bool didCast = false;
 
         if (isShooting && isReadyToShoot)
-            didCast = wand.Cast(isMouseDown, isMouseHeld, isMouseUp);
+            didCast = wandHandler.Cast(isMouseDown, isMouseHeld, isMouseUp);
 
         // Wand animations
         animator.SetBool("IsShooting", isShooting);

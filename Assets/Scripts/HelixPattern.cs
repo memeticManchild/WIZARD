@@ -6,10 +6,10 @@ public class HelixPattern : BulletPattern {
 
     public HelixBullet helixBullet;
 
-    public override void Create()
+    public override void Create(WandHandler origin)
     {
-        HelixBullet h = Instantiate(helixBullet, transform.position, Quaternion.identity) as HelixBullet;
-        h.GetShot(origin.transform.forward, origin.baseDamage, 0);
+        HelixBullet h = Instantiate(helixBullet, origin.transform.position, Quaternion.identity) as HelixBullet;
+        h.GetShot(origin.transform.forward, origin.wand.baseDamage, 0);
         Destroy(h, 3);
     }
 }
