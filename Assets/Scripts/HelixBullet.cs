@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HelixBullet : Projectile
 {
-    private static readonly float loopTime = 0.5f;
+    private static readonly float loopTime = 1f;
     private static readonly float multiplier = 2 * Mathf.PI / loopTime;
-    private static readonly float width = 5;
+    private static readonly float width = 5f;
 
     private float currentLoopTime = 0;
     private float currentSlope;
@@ -16,22 +16,28 @@ public class HelixBullet : Projectile
         currentLoopTime += Time.deltaTime;
         currentLoopTime %= loopTime;
 
-        currentSlope = width * multiplier * Mathf.Cos(multiplier * currentLoopTime);
+        currentSlope = multiplier * Mathf.Cos(multiplier * currentLoopTime);
         
         Vector2 slopeVector = new Vector2(currentLoopTime, currentSlope);
-        
+
         float angleCos = Vector2.Dot(slopeVector, Vector2.up) / (slopeVector.magnitude * Vector2.up.magnitude);
         float angleSin = Mathf.Sin(Mathf.Acos(angleCos));
 
-        Debug.Log("Angle: " + Mathf.Acos(angleCos));
+        Vector2 currentDirection = new Vector2(-direction.y, direction.x);
 
-        Vector2 directionVector = new Vector2(direction.x * angleCos + direction.y * angleSin,
-                                              direction.y * angleCos - direction.x * angleSin).normalized;
+        currentDirection = new Vector2(currentDirection.x * angleCos + currentDirection.y * angleSin,
+                                       currentDirection.y * angleCos - currentDirection.x * angleSin).normalized;
 
-        //Debug.Log(directionVector);
+        currentDirection *= width;
 
-        rigidbody.velocity = directionVector * travelSpeed * Time.deltaTime;
-        //transform.rotation = Quaternion.LookRotation(directionVector, Vector3.forward);
+        rigidbody.velocity = (currentDirection + direction) * travelSpeed * Time.deltaTime;
+        float rotationAngle = Mathf.Atan2(currentDirection.x, -currentDirection.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+    }
+
+    public void SetCurrentLoopTime(float timeIndex) // From 0 to 1
+    {
+        currentLoopTime = timeIndex *= loopTime;
     }
 
     private void FixedUpdate()

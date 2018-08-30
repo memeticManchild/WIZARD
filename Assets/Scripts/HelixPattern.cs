@@ -8,8 +8,12 @@ public class HelixPattern : BulletPattern {
 
     public override void Create(WandHandler origin)
     {
-        HelixBullet h = Instantiate(helixBullet, origin.transform.position, Quaternion.identity) as HelixBullet;
-        h.GetShot(origin.transform.up, origin.wand.baseDamage, 0);
-        Destroy(h, 3);
+        HelixBullet h1 = Instantiate(helixBullet, origin.transform.position, Quaternion.identity) as HelixBullet;
+        HelixBullet h2 = Instantiate(helixBullet, origin.transform.position, Quaternion.identity) as HelixBullet;
+        h1.GetShot(origin.transform.up, origin.wand.baseDamage, 0);
+        h2.GetShot(origin.transform.up, origin.wand.baseDamage, 0);
+        h2.SetCurrentLoopTime(0.5f);
+        Destroy(h1.gameObject, 10);
+        Destroy(h2.gameObject, 10);
     }
 }
