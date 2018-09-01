@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class HelixBullet : Projectile
 {
-    private static readonly float loopTime = 1f;
-    private static readonly float multiplier = 2 * Mathf.PI / loopTime;
-    private static readonly float width = 5f;
+    public float loopTime = 3f;
+    public float width = 2f;
+
+    private float multiplier;
+
+    private void Awake()
+    {
+        multiplier = 2 * Mathf.PI / loopTime;
+    }
 
     private float currentLoopTime = 0;
     private float currentSlope;
 
     protected override void UpdateMovement()
     {
-        currentLoopTime += Time.deltaTime;
-        currentLoopTime %= loopTime;
+        currentLoopTime += Time.fixedDeltaTime;
 
         currentSlope = multiplier * Mathf.Cos(multiplier * currentLoopTime);
         
-        Vector2 slopeVector = new Vector2(currentLoopTime, currentSlope);
+        Vector2 slopeVector = new Vector2(travelSpeed/width, currentSlope * width);
 
         float angleCos = Vector2.Dot(slopeVector, Vector2.up) / (slopeVector.magnitude * Vector2.up.magnitude);
         float angleSin = Mathf.Sin(Mathf.Acos(angleCos));
@@ -28,9 +33,7 @@ public class HelixBullet : Projectile
         currentDirection = new Vector2(currentDirection.x * angleCos + currentDirection.y * angleSin,
                                        currentDirection.y * angleCos - currentDirection.x * angleSin).normalized;
 
-        currentDirection *= width;
-
-        rigidbody.velocity = (currentDirection + direction) * travelSpeed * Time.deltaTime;
+        rigidbody.velocity = currentDirection * travelSpeed * Time.deltaTime;
         float rotationAngle = Mathf.Atan2(currentDirection.x, -currentDirection.y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
     }

@@ -91,8 +91,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 50067291408187968}
   collider: {fileID: 70678536689806822}
-  travelSpeed: 50
+  travelSpeed: 300
   damage: 15
+  loopTime: 2
+  width: 10
 --- !u!212 &212576616716997782
 SpriteRenderer:
   m_ObjectHideFlags: 1
