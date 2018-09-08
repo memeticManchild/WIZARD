@@ -93,7 +93,7 @@ MonoBehaviour:
   collider: {fileID: 70678536689806822}
   travelSpeed: 300
   damage: 15
-  loopTime: 2
+  loopTime: 1
   width: 10
 --- !u!212 &212576616716997782
 SpriteRenderer:

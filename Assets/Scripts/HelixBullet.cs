@@ -33,7 +33,7 @@ public class HelixBullet : Projectile
         currentDirection = new Vector2(currentDirection.x * angleCos + currentDirection.y * angleSin,
                                        currentDirection.y * angleCos - currentDirection.x * angleSin).normalized;
 
-        rigidbody.velocity = currentDirection * travelSpeed * Time.deltaTime;
+        rigidbody.velocity = currentDirection * travelSpeed * Time.fixedDeltaTime;
         float rotationAngle = Mathf.Atan2(currentDirection.x, -currentDirection.y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
     }
