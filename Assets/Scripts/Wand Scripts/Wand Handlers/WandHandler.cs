@@ -6,7 +6,6 @@ public abstract class WandHandler : MonoBehaviour {
 
     public Wand wand;
     public PlayerBehaviour owner;
-    public BulletPattern bulletPattern;
 
     protected float timeSincePrevUse = 0;
 

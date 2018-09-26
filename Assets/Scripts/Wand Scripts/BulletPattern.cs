@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BulletPattern : MonoBehaviour {
 
+    public Projectile projectile;
+
     public abstract void Create(WandHandler origin);
 
 }

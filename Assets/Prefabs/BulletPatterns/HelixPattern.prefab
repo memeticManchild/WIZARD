@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1117127229598866}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1117127229598866
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4771562324430598}
   - component: {fileID: 114925388585236752}
@@ -30,7 +30,7 @@ GameObject:
 --- !u!4 &4771562324430598
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1117127229598866}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
@@ -43,7 +43,7 @@ Transform:
 --- !u!114 &114925388585236752
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1117127229598866}
   m_Enabled: 1
@@ -51,5 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78841b425b7525d4b96ab7a03f9d2f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helixBullet: {fileID: 114060346381972212, guid: fa5101da568a9cb4697e279b948100ba,
+  projectile: {fileID: 114060346381972212, guid: fa5101da568a9cb4697e279b948100ba,
     type: 2}

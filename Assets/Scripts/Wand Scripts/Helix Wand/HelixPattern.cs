@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class HelixPattern : BulletPattern {
 
-    public HelixBullet helixBullet;
-
     public override void Create(WandHandler origin)
     {
-        HelixBullet h1 = Instantiate(helixBullet, origin.transform.position, Quaternion.identity) as HelixBullet;
-        HelixBullet h2 = Instantiate(helixBullet, origin.transform.position, Quaternion.identity) as HelixBullet;
+        HelixBullet h1 = Instantiate(projectile, origin.transform.position, Quaternion.identity) as HelixBullet;
+        HelixBullet h2 = Instantiate(projectile, origin.transform.position, Quaternion.identity) as HelixBullet;
         h1.GetShot(origin.transform.up, origin.wand.baseDamage, 0);
         h2.GetShot(origin.transform.up, origin.wand.baseDamage, 0);
         h2.SetCurrentLoopTime(-0.5f);

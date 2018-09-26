@@ -23,7 +23,7 @@ public class HelixBullet : Projectile
 
         currentSlope = multiplier * Mathf.Cos(multiplier * currentLoopTime);
         
-        Vector2 slopeVector = new Vector2(travelSpeed/width, currentSlope * width);
+        Vector2 slopeVector = new Vector2(travelSpeed, currentSlope * width);
 
         float angleCos = Vector2.Dot(slopeVector, Vector2.up) / (slopeVector.magnitude * Vector2.up.magnitude);
         float angleSin = Mathf.Sin(Mathf.Acos(angleCos));
