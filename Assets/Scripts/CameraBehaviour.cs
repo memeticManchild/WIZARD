@@ -22,5 +22,7 @@ public class CameraBehaviour : MonoBehaviour {
         //set the position so it extends from the player
         transform.position = playerPosition + (new Vector3(mousePosition[0], mousePosition[1], zAxis) * viewReachScale);
 
+
+
 	}
 }
